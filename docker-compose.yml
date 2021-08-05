@@ -1,0 +1,40 @@
+# Github: https://github.com/aneraojunior
+# Dockerhub: https://hub.docker.com/u/antonioanerao
+
+version: "3.7"
+services:
+
+  webserver:
+    container_name: apache2-php74-sqlsrv
+    image: antonioanerao/debian10-php74-sqlsrv:latest
+    restart: on-failure
+    ports:
+      - "9000:80"
+    networks: 
+      - debian10-sqlsrv2017
+    volumes:
+      - debian10-php74-sqlsrv:/var/www
+    depends_on:
+      - sqlServer
+
+  sqlServer:
+    container_name: sql-server-db
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    restart: on-failure
+    ports:
+      - "1433:1433"
+    networks:
+      - debian10-sqlsrv2017
+    volumes:
+      - sql-srv-2017-express:/var/opt/mssql/data
+    environment:
+      SA_PASSWORD: "102030a_"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Express"
+
+networks:
+  debian10-sqlsrv2017:
+
+volumes:
+  debian10-php74-sqlsrv:
+  sql-srv-2017-express:
