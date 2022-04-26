@@ -13,7 +13,7 @@ services:
     networks: 
       - debian10-sqlsrv2017
     volumes:
-      - debian10-php74-sqlsrv:/var/www
+      - debian10:/var/www
     depends_on:
       - sqlServer
 
@@ -28,7 +28,7 @@ services:
     volumes:
       - sql-srv-2017-express:/var/opt/mssql/data
     environment:
-      SA_PASSWORD: "102030a_"
+      SA_PASSWORD: "password"
       ACCEPT_EULA: "Y"
       MSSQL_PID: "Express"
 
@@ -36,5 +36,6 @@ networks:
   debian10-sqlsrv2017:
 
 volumes:
-  debian10-php74-sqlsrv:
+  debian10:
+    external: true
   sql-srv-2017-express:
